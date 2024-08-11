@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Services\TokenService;
 use Illuminate\Http\JsonResponse;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\LoginResource;
@@ -22,7 +22,7 @@ class LoginController
         $user_agent = $request->userAgent();
         $token = $this->service->createTokenUser(
             $user,
-            $userData['device_name']?? 'test_device',
+            $userData['device_name'] ?? 'test_device',
             $ip,
             $user_agent
         );

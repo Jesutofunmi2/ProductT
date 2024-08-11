@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\LoginController;
-use App\Http\Controllers\Api\Auth\LogoutController;
-use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -15,9 +15,6 @@ Route::prefix('/v1')
                 Route::post('/logout', LogoutController::class)->middleware('auth:sanctum')->name('logout');
             });
 
-            Route::middleware('auth:sanctum')
-            ->group(function () {
-               
-            });
+        Route::middleware('auth:sanctum')
+            ->group(function () {});
     });
-    

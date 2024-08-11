@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Controller\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,7 +17,7 @@ class LoginControllerTest extends TestCase
         $user = User::factory()->create();
         $data = [
             'email' => $user->email,
-            'password' => 'password'
+            'password' => 'Balo5544'
         ];
 
         $response = $this->postJson( route('auth.login'), $data);
@@ -34,7 +34,7 @@ class LoginControllerTest extends TestCase
         $user = User::factory()->create();
         $data = [
             'email' => $user->email,
-            'password' => 'fakepassword'
+            'password' => 'Balo5566'
         ];
 
         $response = $this->postJson( route('auth.login'), $data);
