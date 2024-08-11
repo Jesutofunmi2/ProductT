@@ -22,7 +22,7 @@ class LoginController
         $user_agent = $request->userAgent();
         $token = $this->service->createTokenUser(
             $user,
-            'test_device',
+            $userData['device_name']?? 'test_device',
             $ip,
             $user_agent
         );

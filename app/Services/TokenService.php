@@ -13,7 +13,7 @@ class TokenService
         return $token;
     }
 
-    public function revokeCurrentTokenUser(User $user)
+    public function revokeCurrentToken(User $user)
     {
         return $user->tokens()->where('id', optional($user->currentAccessToken())->id)->delete();
     }
