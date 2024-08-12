@@ -25,7 +25,7 @@ class ProductController extends Controller
     {
 
         $product = $this->productService->createProduct($request->validated());
-        
+
         return ProductResource::make($product);
     }
 
@@ -41,10 +41,6 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product): JsonResource
     {
         $product = $this->productService->updateProduct($request->validated(), $product);
-
-        if ($request->input('file')) {
-            $product->syncFiles($request->input('file'));
-        }
 
         return ProductResource::make($product);
     }
