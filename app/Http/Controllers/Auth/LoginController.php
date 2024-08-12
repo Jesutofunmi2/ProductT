@@ -27,7 +27,9 @@ class LoginController
             $ip,
             $user_agent
         );
+        
         $user->token = $token;
+
         return response()->json([
             'message' => 'Login Successful',
             'data' => UserResource::make($user)
