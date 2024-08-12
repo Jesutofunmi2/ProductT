@@ -11,9 +11,16 @@ class RegisterControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->withoutMiddleware();
+    }
+
     public function test_user_can_register_successfull_as_user()
     {
-        $this->withoutMiddleware();
+
         $email = "joseph@gmail.com";
 
         $userData = [
@@ -34,7 +41,6 @@ class RegisterControllerTest extends TestCase
 
     public function test_user_cannot_register_with_invalid_credentials()
     {
-        $this->withoutMiddleware();
 
         $data = [
             'name' => 'Balogun Joseph',
@@ -49,8 +55,7 @@ class RegisterControllerTest extends TestCase
 
     public function test_user_cannot_register_with_existing_email()
     {
-        $this->withoutMiddleware();
-
+        
         $user = User::factory()->create();
         $data = [
             'name' => 'Balogun Joseph',

@@ -8,7 +8,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Http\Response;
-use Illuminate\Http\Request;
+
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductController extends Controller
