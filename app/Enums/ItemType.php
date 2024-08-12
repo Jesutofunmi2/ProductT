@@ -2,17 +2,17 @@
 
 namespace App\Enums;
 
-use App\Models\User;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 
 enum ItemType: string
 {
-    case USER = 'user';
+    case PRODUCT = 'product';
 
     public static function morphMap(): array
     {
         return [
-            'user' => User::class,
+            'product' => Product::class,
         ];
     }
 

@@ -46,7 +46,7 @@ class LoginController
 
         abort_if(is_null($user), 401, 'Incorrect login details');
 
-        if (! Hash::check($data['password'], $user->password)) {
+        if (!Hash::check($data['password'], $user->password)) {
             abort(401, 'Incorrect login details');
         }
 

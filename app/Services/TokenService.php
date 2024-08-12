@@ -8,7 +8,7 @@ class TokenService
 {
     public function createTokenUser(User $user, string $device_name, string $ip = Null, string $user_agent = Null): string
     {
-        $token = $user->createToken($device_name)->plainTextToken;
+        $token = $user->createToken($device_name, ['*'], now()->addWeek())->plainTextToken;
 
         return $token;
     }

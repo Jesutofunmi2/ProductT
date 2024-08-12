@@ -12,13 +12,14 @@ class UserService
     {
         $user = new User;
 
-        DB::transaction(function () use (&$user, $data) {
+        DB::beginTransaction();
 
             $user->name = $data['name'];
             $user->email = $data['email'];
             $user->password = Hash::make($data['password']);
             $user->save();
-        });
+            
+        DB::commit();
 
         return $user;
     }

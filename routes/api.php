@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -16,5 +18,8 @@ Route::prefix('/v1')
             });
 
         Route::middleware('auth:sanctum')
-            ->group(function () {});
+            ->group(function () {
+                Route::apiResource('products', ProductController::class)->only('index', 'show', 'store', 'destroy');
+                Route::apiResource('categories', CategoryController::class)->only('index', 'show', 'store');
+            });
     });
