@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Actions;
 
 use App\Enums\FileType;
 use App\Models\File;

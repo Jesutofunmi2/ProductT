@@ -12,14 +12,13 @@ Route::prefix('/v1')
     ->group(function () {
         Route::prefix('auth')->name('auth.')
             ->group(function () {
-                Route::post('login', LoginController::class)->name('login');
-                Route::post('register', RegisterController::class)->name('register');
+                Route::post('login', LoginController::class)->name('login')->middleware('guest:sanctum');
+                Route::post('register', RegisterController::class)->name('register')->middleware('guest:sanctum');
                 Route::post('/logout', LogoutController::class)->middleware('auth:sanctum')->name('logout');
             });
 
         Route::middleware('auth:sanctum')
             ->group(function () {
-                Route::apiResource('products', ProductController::class)->only('index', 'show', 'store', 'destroy');
-                Route::apiResource('categories', CategoryController::class)->only('index', 'show', 'store');
+                Route::apiResource('products', ProductController::class);
             });
     });

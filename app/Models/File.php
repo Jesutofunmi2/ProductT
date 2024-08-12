@@ -5,27 +5,22 @@ namespace App\Models;
 use App\Enums\FileType;
 use App\Models\Concerns\BelongsToProduct;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\Storage;
 
-class File extends BaseModel
+class File extends Model
 {
-    use BelongsToProduct;
     use HasFactory;
-    use HasUuids;
+    use HasUlids;
 
     protected $casts = [
         'type' => FileType::class,
     ];
 
     protected $guarded = [];
-
-    public function item(): MorphTo
-    {
-        return $this->morphTo();
-    }
 
     protected function url(): Attribute
     {

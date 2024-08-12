@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\LoginResource;
+use App\Http\Resources\UserResource;
 use App\Services\TokenService;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
@@ -20,12 +21,14 @@ class RegisterController extends Controller
         $ip = $request->ip();
         $user_agent = $request->userAgent();
 
-        $token = $this->tokenService->createTokenUser($user, $userData['device_name'] ?? 'test', $ip, $user_agent);
-
+        $token = $this->tokenService->createTokenUser($user, 'device_name', $ip, $user_agent);
+        
+        $user->token = $token;
+        
         return response()->json(
             [
                 'message' => 'Registration successful.',
-                'data' => LoginResource::make($user->withAccessToken($token))
+                'data' => UserResource::make($user)
             ],
             status: 201
         );

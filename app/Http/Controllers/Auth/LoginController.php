@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\LoginResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\TokenService;
 use Illuminate\Http\JsonResponse;
@@ -22,14 +23,14 @@ class LoginController
         $user_agent = $request->userAgent();
         $token = $this->service->createTokenUser(
             $user,
-            $userData['device_name'] ?? 'test_device',
+            'device_name',
             $ip,
             $user_agent
         );
-
+        $user->token = $token;
         return response()->json([
             'message' => 'Login Successful',
-            'data' => LoginResource::make($user->withAccessToken($token))
+            'data' => UserResource::make($user)
         ]);
     }
 
@@ -40,16 +41,6 @@ class LoginController
             throw ValidationException::withMessages(['credentials' => __('auth.failed')]);
         }
 
-        $data = $request->validated();
-
-        $user = User::whereEmail($data['email'])->first();
-
-        abort_if(is_null($user), 401, 'Incorrect login details');
-
-        if (!Hash::check($data['password'], $user->password)) {
-            abort(401, 'Incorrect login details');
-        }
-
-        return $user;
+        return $request->user();
     }
 }

@@ -21,12 +21,7 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'price' => $this->price,
             'stock' => $this->stock,
-            'file' => $this->fileQeury($this->id),
+            'files' => $this->files,
         ];
-    }
-
-    private function fileQeury($id)
-    {
-        return File::query()->where('product_id', $id)->get();
     }
 }

@@ -14,41 +14,22 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class ProductController extends Controller
 {
 
-    public function __construct(protected ProductService $productService)
-    {
-    
-    }
+    public function __construct(protected ProductService $productService) {}
     public function index(): JsonResource
     {
-        $products = Product::orderBy('created_at', 'desc')->paginate(15);
+        $products = Product::with('files')->orderBy('created_at', 'desc')->paginate(15);
         return ProductResource::collection($products);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(ProductRequest $request): JsonResource
     {
-      //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(ProductRequest $request)
-    {
         $product = $this->productService->createProduct($request->validated());
-
-        if ($request->input('file')) {
-            $product->syncFiles($request->input('file'));
-        }
- 
+        
         return ProductResource::make($product);
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
         $product = Product::find($id);
@@ -56,25 +37,18 @@ class ProductController extends Controller
         return ProductResource::make($product);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+
+    public function update(ProductRequest $request, Product $product): JsonResource
     {
-        //
+        $product = $this->productService->updateProduct($request->validated(), $product);
+
+        if ($request->input('file')) {
+            $product->syncFiles($request->input('file'));
+        }
+
+        return ProductResource::make($product);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Product $product): Response
     {
         $product->delete();

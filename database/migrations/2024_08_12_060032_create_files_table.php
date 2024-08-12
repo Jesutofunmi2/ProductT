@@ -1,8 +1,10 @@
 <?php
 
+use App\Enums\FileType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rules\Enum;
 
 return new class extends Migration
 {
@@ -12,10 +14,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('files', function (Blueprint $table) {
-            $table->uuid('id')->unique();
-            $table->nullableMorphs('item');
-            $table->uuid('product_id')->nullable();
-            $table->unsignedTinyInteger('type')->index();
+            $table->ulid('id')->primary();
+            $table->foreignUlid('product_id')->constrained()->onDelete('cascade');
+            $table->enum('type', [FileType::IMAGE->value, FileType::VIDEO->value]);
             $table->string('name');
             $table->string('path');
             $table->longText('md5');

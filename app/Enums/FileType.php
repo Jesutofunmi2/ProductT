@@ -2,8 +2,8 @@
 
 namespace App\Enums;
 
-enum FileType: int
+enum FileType: string
 {
-    case IMAGE = 1;
-    case VIDEO = 2;
+    case IMAGE = 'image';
+    case VIDEO = 'video';
 }
