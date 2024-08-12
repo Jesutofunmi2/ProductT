@@ -14,7 +14,21 @@ use Illuminate\Validation\ValidationException;
 
 class LoginController
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @param TokenService $service
+     */
     public function __construct(protected TokenService $service) {}
+
+    /**
+     * Handle an incoming login request.
+     *
+     * Authenticates the user, creates an authentication token, and returns a JSON response with the user data.
+     *
+     * @param LoginRequest $request
+     * @return JsonResponse
+     */
     public function __invoke(LoginRequest $request): JsonResponse
     {
         $user = $this->authenticateUser($request);
@@ -27,7 +41,7 @@ class LoginController
             $ip,
             $user_agent
         );
-        
+
         $user->token = $token;
 
         return response()->json([
@@ -36,7 +50,13 @@ class LoginController
         ]);
     }
 
-
+    /**
+     * Authenticate the user based on the provided credentials.
+     *
+     * @param LoginRequest $request
+     * @return User
+     * @throws ValidationException
+     */
     protected function authenticateUser(LoginRequest $request): User
     {
         if (!Auth::attempt($request->only(['email', 'password']))) {

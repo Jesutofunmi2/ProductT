@@ -11,9 +11,23 @@ use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 
 class RegisterController extends Controller
-{
+{   
+     /**
+     * Create a new controller instance.
+     *
+     * @param TokenService $tokenService
+     * @param UserService $userService
+     */
     public function __construct(protected TokenService $tokenService, protected UserService $userService) {}
-
+    
+    /**
+     * Handle an incoming registration request.
+     *
+     * Registers a new user, creates an authentication token, and returns a JSON response with user data.
+     *
+     * @param RegisterRequest $request
+     * @return JsonResponse
+     */
     public function __invoke(RegisterRequest $request): JsonResponse
     {
         $user = $this->userService->createUser($request->validated());
@@ -24,7 +38,7 @@ class RegisterController extends Controller
         $token = $this->tokenService->createTokenUser($user, 'device_name', $ip, $user_agent);
         
         $user->token = $token;
-        
+
         return response()->json(
             [
                 'message' => 'Registration successful.',

@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class ProductService
 {
-
     /**
      * Create a new product and upload associated files.
      *
@@ -19,10 +18,8 @@ class ProductService
      */
     public function createProduct(array $data): Product
     {
-        // Create an instance of FileStorage for handling file uploads
         $upload = new FileStorage;
 
-        // Begin a database transaction
         DB::beginTransaction();
 
         $product = new Product();
