@@ -61,6 +61,8 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
+        abort_if(is_null($product),  204, 'Invalid Content or Parameter' );
+
         return ProductResource::make($product);
     }
 
@@ -76,6 +78,8 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product): JsonResource
     {
         $product = $this->productService->updateProduct($request->validated(), $product);
+
+        abort_if(is_null($product),  204, 'Invalid Content or Parameter' );
 
         return ProductResource::make($product);
     }
