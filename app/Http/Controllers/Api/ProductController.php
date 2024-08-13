@@ -75,13 +75,15 @@ class ProductController extends Controller
      * @param Product $product
      * @return JsonResource
      */
-    public function update(ProductRequest $request, Product $product): JsonResource
+    public function update(ProductRequest $request, string $id): JsonResource
     {
-        $product = $this->productService->updateProduct($request->validated(), $product);
+        $product = Product::find($id);
 
-        abort_if(is_null($product),  204, 'Invalid Content or Parameter' );
+        abort_if(is_null($product),  404, 'Not Found' );
 
-        return ProductResource::make($product);
+        $productUpdated = $this->productService->updateProduct($request->validated(), $product);
+
+        return ProductResource::make($productUpdated);
     }
 
     /**

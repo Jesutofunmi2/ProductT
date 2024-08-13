@@ -53,8 +53,6 @@ class ProductService
      */
     public function updateProduct(array $data, Product $product): Product
     {
-        abort_if(is_null($product),  204, 'Invalid Content or Parameter' );
-        
         DB::beginTransaction();
 
         $product->update([
