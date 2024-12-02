@@ -1,9 +1,9 @@
 Set up 
 
-docker-compoer build 
+docker-compose build 
 
 
-docker composer up
+docker compose up
 
 docker-compose exec runtime sh
 
